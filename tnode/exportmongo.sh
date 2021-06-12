@@ -15,7 +15,10 @@ mongoexport --host mongo-ssp-traffic-review-1:1302 --username user1 --password A
 mongoexport --host mongo-ssp-traffic-review-1:1302 --username user1 --password ApuCRv2HuLMGgg8NNjPZ --db traffic-review-test --collection action  --query "{"_id":/$date/}" --out ./action.json
 mongoexport --host mongo-ssp-traffic-review-1:1302 --username user1 --password ApuCRv2HuLMGgg8NNjPZ --db traffic-review-test --collection histogram-dsp --query "{"_id":/$date/}" --out ./histogram-dsp.json
 echo "mongo export 100% ok"
-
+if [ -n "$2" ];then
+	echo "json is ok enough"
+	exit 0
+fi
 echo "dealing this logs to json format ---ing "
 
 whole=`wc -l count.json |  awk '{print $1}'` ;cat count.json | awk -vwhole=$whole '{if(NR==1){print "["$0","}else if(NR==whole){print $0"]"}else{print $0","}}' >> count.log1
